@@ -1,32 +1,66 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <router-view />
+    <v-bottom-navigation
+      app
+      :value="activeBtn"
+      color="deep-purple accent-4"
+      fixed
+      grow
+      height="60px"
+      class="pa-3"
+    >
+      <v-btn
+        min-height="45"
+        class="noActiveState"
+        @click="$router.push({name: 'edit'})"
+      >
+        <span>Goals</span>
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+
+      <v-btn
+        min-height="45"
+        class="noActiveState"
+        @click="$router.push({name:'home'})"
+      >
+        <span>Home</span>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+
+      <v-btn
+        min-height="45"
+        class="noActiveState"
+        @click="$router.push({name:'account'})"
+      >
+        <span>Account</span>
+        <v-icon>mdi-account</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
+  </v-app>
 </template>
 
+<script>
+
+export default {
+  name: 'App',
+
+  data: () => ({
+    activeBtn: 1,
+  }),
+
+  created() {
+    const map = {
+      edit: 0,
+      home: 1,
+      account: 2,
+    };
+    this.activeBtn = map[this.$route.name];
+  },
+};
+</script>
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.noActiveState:focus::before {
+  opacity: 0 !important;
 }
 </style>
